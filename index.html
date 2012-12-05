@@ -24,6 +24,12 @@
 
         // Pattern mixin functions
         function applyPattern(pattern, obj, browser, primary, secondary) {
+            // First reset everything (note this could lead to errors if a non-matching pattern is passed)
+            obj.css('backgroundColor', 'none');
+            obj.css('backgroundImage', 'none');
+            obj.css('backgroundSize', 'none');
+            obj.css('backgroundPosition', 'none');
+
             if (pattern === "solid") {
                 obj.css('backgroundColor', primary);
             } else if (pattern === "diamonds") {
@@ -57,7 +63,6 @@
                 obj.css('background-size', '50px 50px');
                 obj.css('background-position', '0 0, 25px 25px')
             } else if (pattern === "checkers") {
-                console.log("Applying checkers pattern.");
                 var bk = browser + 'linear-gradient(45deg, ' + secondary + ' 25%, transparent 25%, transparent 75%, ' + secondary + ' 75%, ' + secondary + '), ';
                 bk = bk + browser + 'linear-gradient(45deg, ' + secondary + ' 25%, transparent 25%, transparent 75%, ' + secondary + ' 75%, ' + secondary + ')';
                 obj.css({'background-color': primary});
@@ -213,11 +218,9 @@
         $("#activate").click(function() {
             if (controlsHidden) {
                 $("#controls").removeClass("hidden");
-                console.log("Displaying controls.");
                 controlsHidden = false;
             } else {
                 $("#controls").addClass("hidden");
-                console.log("Hiding controls.");
                 controlsHidden = true;
             }
         });
@@ -449,7 +452,6 @@
         });
         $("#docilerabbit").click(function() {
             if (rabbit2new) {
-                console.log("loading rabbi2");
                 $("#rabbit2").svg({
                     onLoad: function()
                     {
@@ -474,7 +476,6 @@
         });
         $("#angryrabbit").click(function() {
             if (rabbit3new) {
-                console.log("Creating rabbit3");
                 $("#rabbit3").svg({
                     onLoad: function()
                     {
