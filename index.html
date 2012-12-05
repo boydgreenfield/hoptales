@@ -25,10 +25,8 @@
         // Pattern mixin functions
         function applyPattern(pattern, obj, browser, primary, secondary) {
             if (pattern === "solid") {
-                console.log("Applying solid pattern.");
                 obj.css('backgroundColor', primary);
             } else if (pattern === "diamonds") {
-                console.log("Applying diamonds pattern.");
                 var bk = browser + 'linear-gradient(45deg, ' + secondary + ' 25%, transparent 25%, transparent 75%, ' + secondary + ' 75%, ' + secondary + '), ';
                 bk = bk + browser + 'linear-gradient(-45deg, ' + secondary + ' 25%, transparent 25%, transparent 75%, ' + secondary + ' 75%, ' + secondary + ')';
                 obj.css({'background-color': primary});
@@ -42,7 +40,6 @@
                 obj.css('background-size', '30px 30px, 90px 90px');
                 obj.css('background-position', '0 0');
             } else if (pattern === "tablecloth") {
-                console.log("Applying tablecloth pattern.");
                 var s = secondary;
                 var patt = /^#([\da-fA-F]{2})([\da-fA-F]{2})([\da-fA-F]{2})$/;
                 var matches = patt.exec(s);
@@ -53,7 +50,6 @@
                 obj.css('background-image', bk);
                 obj.css('background-size', '15px 15px');
             } else if (pattern === "polka") {
-                console.log("Applying polka pattern.");
                 var bk = browser + 'radial-gradient(' + primary + ' 15%, transparent 16%), ';
                 bk = bk + browser + 'radial-gradient(' + primary + ' 15%, transparent 16%)';
                 obj.css('background-image', bk);
@@ -82,7 +78,11 @@
     <div id="banner" contenteditable="true">
         <h2 id="brew-text">Ale Name</h2>
     </div>
-    <div id="rabbit"></div>
+    <div class="rabbit" id="rabbit1"></div>
+    <div class="rabbit hidden" id="rabbit2"></div>
+    <div class="rabbit" id="rabbit3-bounds">
+        <div class="rabbit hidden" id="rabbit3"></div>
+    </div>
 </div>
 <div id="controls" class="visible">
     <div id="color-control">
@@ -93,7 +93,9 @@
         <div class="colordiv" id="color-4"><p>Banner Fill</p></div>
         <div class="colordiv" id="color-5"><p>Banner Border</p></div>
         <div class="colordiv" id="color-6"><p>Hops Fill</p></div>
-        <div class="colordiv" id="color-7"><p>Hops Border</p></div>
+        <div class="colordiv" id="color-7"><p>Hops Outline</p></div>
+        <div class="colordiv" id="color-10"><p>Rabbit Fill</p></div>
+        <div class="colordiv" id="color-11"><p>Rabbit Outline</p></div>
     </div>
     <div id="pattern-control">
         <h3>Patterns:</h3>
@@ -107,7 +109,12 @@
         <div class="colordiv" id="pattern-polka"><p>Polka</p></div>
         <div class="colordiv" id="pattern-checkers"><p>Checkers</p></div>
     </div>
-    <div id="rabbit-control"><h3>Rabbit:</h3></div>
+    <div id="rabbit-control">
+        <h3>Rabbits:</h3>
+        <div class="colordiv" id="jumpingrabbit"><p>Leaping Rabbit</p></div>
+        <div class="colordiv" id="docilerabbit"><p>Docile Rabbit</p></div>
+        <div class="colordiv" id="angryrabbit"><p>Angry Rabbit</p></div>
+    </div>
     <div id="colorpickerHolder"></div>
 </div>
 <div id="activate"></div>
@@ -117,9 +124,15 @@
 <script type="text/javascript">
     var svg1;
     var svg2;
+    var rabbit1;
+    var rabbit2;
+    var rabbit3;
     var browser;
     var primary;
     var secondary;
+    var activeRabbit = "#rabbit1";
+    var rabbit2new = true;
+    var rabbit3new = true;
     jQuery(function() {
         // Sniff the browser
         if ($.browser.chrome) {
@@ -139,18 +152,29 @@
             onLoad: function()
                 {
                 svg1 = $("#hops-left").svg('get');
-                svg1.load('static/hops/hops_left_styled.svg', {addTo: true,  changeSize: false});
+                svg1.load('static/hops/hops_left_styled.svg', {addTo: true, changeSize: false});
                 },
-            settings: {}}
-            );
+            settings: {}
+            });
         $("#hops-right").svg({
             onLoad: function()
                 {
                 svg2 = $("#hops-right").svg('get');
-                svg2.load('static/hops/hops_right_styled.svg', {addTo: true,  changeSize: false});
+                svg2.load('static/hops/hops_right_styled.svg', {addTo: true, changeSize: false});
                 },
-            settings: {}}
-            );
+            settings: {}
+            });
+
+        // Load the rabbit
+        $("#rabbit1").svg({
+            onLoad: function()
+            {
+                rabbit1 = $("#rabbit1").svg('get');
+                rabbit1.load('static/rabbits/rabbit_jumping.svg', {addTo: true, changeSize: false})
+            },
+            settings: {}
+        })
+
 
         // On page load configure the colors for the selector widgets
         $('#color-1').css('backgroundColor', rgb2hex($('#title-text').css('color')));
@@ -166,12 +190,15 @@
         // Now match the color pickers
         $('#color-6').css('backgroundColor', "#fff");
         $('#color-7').css('backgroundColor', rgb2hex($('#label').css('borderColor')));
+        $('#color-10').css('backgroundColor', "#000");
+        $('#color-11').css('backgroundColor', "#000");
 
         // And hard code the colors for the pattern picker
         primary = "#efefef";
         secondary = "#cf4040";
         $('#color-8').css('backgroundColor', primary);
         $('#color-9').css('backgroundColor', secondary);
+
 
         // Now set the patterns
         applyPattern("solid", $('#pattern-solid'), browser, primary, secondary);
@@ -308,6 +335,39 @@
         	}
         });
 
+        $('#color-10').ColorPicker({
+        	color: rgb2hex($("#color-10").css('backgroundColor')),
+        	onShow: function (colpkr) {
+        		$(colpkr).fadeIn(500);
+        		return false;
+        	},
+        	onHide: function (colpkr) {
+        		$(colpkr).fadeOut(500);
+        		return false;
+        	},
+        	onChange: function (hsb, hex, rgb) {
+        		$('#color-10').css('backgroundColor', '#' + hex);
+                rabbit1.style('.rabbit {fill: #' + hex + '};')
+        	}
+        });
+
+        $('#color-11').ColorPicker({
+        	color: rgb2hex($("#color-11").css('backgroundColor')),
+        	onShow: function (colpkr) {
+        		$(colpkr).fadeIn(500);
+        		return false;
+        	},
+        	onHide: function (colpkr) {
+        		$(colpkr).fadeOut(500);
+        		return false;
+        	},
+        	onChange: function (hsb, hex, rgb) {
+        		$('#color-11').css('backgroundColor', '#' + hex);
+                rabbit1.style('.rabbit {stroke: #' + hex + '; stroke-width: 50;};')
+        	}
+        });
+
+
         // Control patterns
         $('#color-8').ColorPicker({
         	color: rgb2hex($("#color-8").css('backgroundColor')),
@@ -353,6 +413,7 @@
         	}
         });
 
+        // Pattern clicking
         $("#pattern-solid").click(function() {
             applyPattern("solid", $('#label'), browser, primary, secondary);
         });
@@ -370,6 +431,70 @@
         });
         $("#pattern-checkers").click(function() {
             applyPattern("checkers", $('#label'), browser, primary, secondary);
+        });
+
+        // Rabbit clicking!
+        $("#jumpingrabbit").click(function() {
+            if (activeRabbit === "#rabbit1") {
+                return;
+            } else if (activeRabbit === "#rabbit2") {
+                $("#rabbit2").addClass("hidden");
+                $("#rabbit1").removeClass("hidden");
+                activeRabbit = "#rabbit1";
+            } else if (activeRabbit === "#rabbit3") {
+                $("#rabbit3").addClass("hidden");
+                $("#rabbit1").removeClass("hidden");
+                activeRabbit = "#rabbit1";
+            }
+        });
+        $("#docilerabbit").click(function() {
+            if (rabbit2new) {
+                console.log("loading rabbi2");
+                $("#rabbit2").svg({
+                    onLoad: function()
+                    {
+                        rabbit2 = $("#rabbit2").svg('get');
+                        rabbit2.load('static/rabbits/rabbit_docile.svg', {addTo: true, changeSize: true})
+                    },
+                    settings: {}
+                })
+            }
+            if (activeRabbit === "#rabbit1") {
+                $("#rabbit1").addClass("hidden");
+                $("#rabbit2").removeClass("hidden");
+                activeRabbit = "#rabbit2";
+
+            } else if (activeRabbit === "#rabbit2") {
+                return;
+            } else if (activeRabbit === "#rabbit3") {
+                $("#rabbit3").addClass("hidden");
+                $("#rabbit2").removeClass("hidden");
+                activeRabbit = "#rabbit2";
+            }
+        });
+        $("#angryrabbit").click(function() {
+            if (rabbit3new) {
+                console.log("Creating rabbit3");
+                $("#rabbit3").svg({
+                    onLoad: function()
+                    {
+                        rabbit3 = $("#rabbit3").svg('get');
+                        rabbit3.load('static/rabbits/rabbit_angry.svg', {addTo: true, changeSize: true})
+                    },
+                    settings: {}
+                })
+            }
+            if (activeRabbit === "#rabbit1") {
+                $("#rabbit1").addClass("hidden");
+                $("#rabbit3").removeClass("hidden");
+                activeRabbit = "#rabbit3";
+            } else if (activeRabbit === "#rabbit2") {
+                $("#rabbit2").addClass("hidden");
+                $("#rabbit3").removeClass("hidden");
+                activeRabbit = "#rabbit3";
+            } else if (activeRabbit === "#rabbit3") {
+                return;
+            }
         });
 
         // Randomization script...
