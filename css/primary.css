@@ -1,0 +1,156 @@
+* {
+  margin: 0px;
+  padding: 0px; }
+
+body {
+  height: 100%;
+  background: #fbf9f8; }
+
+a {
+  color: #026594;
+  text-decoration: none; }
+
+a, h1, h2, h3, h4, p {
+  font-family: french-canon-small-caps, serif;
+  color: #444444; }
+
+#label {
+  width: 500px;
+  height: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 120px;
+  position: relative;
+  border: 5px solid #bf2160;
+  background: #fbf9f8; }
+
+#title {
+  width: 500px;
+  position: absolute;
+  top: -65px;
+  z-index: 2; }
+
+#title h1 {
+  font-size: 3em;
+  text-align: center; }
+
+#hops-left {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  top: -100px;
+  left: -100px;
+  z-index: 2; }
+
+#hops-right {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  top: -100px;
+  right: -100px;
+  z-index: 2; }
+
+#rabbit {
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  left: 100px;
+  bottom: 0px;
+  background-image: url(../static/rabbits/rabbit_jumping.svg);
+  background-size: 300px 300px;
+  background-repeat: no-repeat;
+  background-position: 0px 0px; }
+
+#banner {
+  width: 500px;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  background: white;
+  position: absolute;
+  top: 100px;
+  border-top: black solid 2px;
+  border-bottom: black solid 2px; }
+
+#banner h2 {
+  text-align: center; }
+
+#controls {
+  width: 100%;
+  height: 250px;
+  background: #dcc8c8;
+  border-top: 1px solid #999;
+  margin-top: 50px; }
+
+#color-control {
+  width: 100%;
+  height: 100px; }
+
+#color-control h3 {
+  float: left;
+  margin-top: 25px;
+  margin-left: 50px;
+  margin-right: 50px;
+  width: 80px; }
+
+#pattern-control {
+  width: 100%;
+  height: 100px; }
+
+#pattern-control h3 {
+  float: left;
+  margin-top: 25px;
+  margin-left: 50px;
+  margin-right: 50px;
+  width: 80px; }
+
+#pattern-control h4 {
+  float: left;
+  margin-top: 25px;
+  margin-left: 53px;
+  margin-right: 0px;
+  width: 100px;
+  font-style: italic; }
+
+#rabbit-control {
+  width: 100%;
+  height: 50px; }
+
+#rabbit-control h3 {
+  float: left;
+  margin-left: 50px;
+  width: 80px; }
+
+.leftcolordiv {
+  position: absolute;
+  left: 250px; }
+
+.colordiv {
+  border: 1px solid #444;
+  width: 50px;
+  height: 50px;
+  margin: 12px;
+  float: left; }
+
+.colordiv p {
+  text-align: center;
+  font-size: 0.7em;
+  padding-top: 52px; }
+
+.hidden {
+  display: none; }
+
+#randomize {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 40px;
+  width: 40px;
+  background: #dc5050; }
+
+#activate {
+  position: fixed;
+  top: 0;
+  right: 40px;
+  height: 40px;
+  width: 40px;
+  background: #50dc50; }

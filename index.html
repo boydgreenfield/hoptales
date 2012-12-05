@@ -1,0 +1,382 @@
+<html>
+<head>
+    <title>Hop Tale Ales</title>
+    <link rel="stylesheet" media="screen" type="text/css" href="scripts/colorpicker.css" />
+    <link rel="stylesheet" href="css/primary.css" type="text/css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script type="text/javascript" src="http://use.edgefonts.net/lato.js"></script>
+    <script type="text/javascript" src="http://use.edgefonts.net/alegreya-sc.js"></script>
+    <script type="text/javascript" src="http://use.edgefonts.net/english-small-caps.js"></script>
+    <script type="text/javascript" src="http://use.edgefonts.net/french-canon-small-caps.js"></script>
+    <script type="text/javascript" src="http://use.edgefonts.net/great-primer-small-caps.js"></script>
+    <script type="text/javascript" src="scripts/colorpicker.js"></script>
+    <link rel="stylesheet" href="scripts/jquerySVG/jquery.svg.css" type="text/css" />
+    <script type="text/javascript" src="scripts/jquerySVG/jquery.svg.min.js"></script>
+    <script type="text/javascript">
+        // Color conversion
+        function rgb2hex(rgb) {
+            rgb = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)$/);
+            function hex(x) {
+                return ("0" + parseInt(x).toString(16)).slice(-2);
+            }
+            return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+        }
+
+        // Pattern mixin functions
+        function applyPattern(pattern, obj, browser, primary, secondary) {
+            if (pattern === "solid") {
+                console.log("Applying solid pattern.");
+                obj.css('backgroundColor', primary);
+            } else if (pattern === "diamonds") {
+                console.log("Applying diamonds pattern.");
+                var bk = browser + 'linear-gradient(45deg, ' + secondary + ' 25%, transparent 25%, transparent 75%, ' + secondary + ' 75%, ' + secondary + '), ';
+                bk = bk + browser + 'linear-gradient(-45deg, ' + secondary + ' 25%, transparent 25%, transparent 75%, ' + secondary + ' 75%, ' + secondary + ')';
+                obj.css({'background-color': primary});
+                obj.css({'background-image': bk});
+                obj.css('background-size', '20px 20px');
+            } else if (pattern === "marrakesh") {
+                var bk = browser + 'radial-gradient(' + secondary + ' 9px, transparent 10px),';
+                bk = bk + browser + 'repeating-radial-gradient(' + secondary + ' 0, ' + secondary + ' 4px, transparent 5px, transparent 20px, ' + secondary + ' 21px, ' + secondary + ' 25px, transparent 26px, transparent 50px)';
+                obj.css('background-color', primary);
+                obj.css('background-image', bk);
+                obj.css('background-size', '30px 30px, 90px 90px');
+                obj.css('background-position', '0 0');
+            } else if (pattern === "tablecloth") {
+                console.log("Applying tablecloth pattern.");
+                var s = secondary;
+                var patt = /^#([\da-fA-F]{2})([\da-fA-F]{2})([\da-fA-F]{2})$/;
+                var matches = patt.exec(s);
+                var rgba = "rgba("+parseInt(matches[1], 16)+","+parseInt(matches[2], 16)+","+parseInt(matches[3], 16)+", 0.5)";
+                var bk = browser + 'linear-gradient(90deg, ' + rgba + ' 50%, transparent 50%), ';
+                bk = bk + browser + 'linear-gradient(0deg, ' + rgba + ' 50%, transparent 50%)';
+                obj.css('background-color', primary);
+                obj.css('background-image', bk);
+                obj.css('background-size', '15px 15px');
+            } else if (pattern === "polka") {
+                console.log("Applying polka pattern.");
+                var bk = browser + 'radial-gradient(' + primary + ' 15%, transparent 16%), ';
+                bk = bk + browser + 'radial-gradient(' + primary + ' 15%, transparent 16%)';
+                obj.css('background-image', bk);
+                obj.css('background-color', secondary);
+                obj.css('background-size', '50px 50px');
+                obj.css('background-position', '0 0, 25px 25px')
+            } else if (pattern === "checkers") {
+                console.log("Applying checkers pattern.");
+                var bk = browser + 'linear-gradient(45deg, ' + secondary + ' 25%, transparent 25%, transparent 75%, ' + secondary + ' 75%, ' + secondary + '), ';
+                bk = bk + browser + 'linear-gradient(45deg, ' + secondary + ' 25%, transparent 25%, transparent 75%, ' + secondary + ' 75%, ' + secondary + ')';
+                obj.css({'background-color': primary});
+                obj.css({'background-image': bk});
+                obj.css('background-size', '16px 16px');
+                obj.css('background-position', '0 0, 8px 8px');
+            }
+            return obj;
+        }
+    </script>
+</head>
+<body>
+
+<div id="label">
+    <div id="title"><h1 id="title-text">Hop Tale</h1></div>
+    <div id="hops-left"></div>
+    <div id="hops-right"></div>
+    <div id="banner" contenteditable="true">
+        <h2 id="brew-text">Ale Name</h2>
+    </div>
+    <div id="rabbit"></div>
+</div>
+<div id="controls" class="visible">
+    <div id="color-control">
+        <h3>Colors:</h3>
+        <div class="colordiv" id="color-1"><p>Title Text</p></div>
+        <div class="colordiv" id="color-2"><p>Brew Text</p></div>
+        <div class="colordiv" id="color-3"><p>Border</p></div>
+        <div class="colordiv" id="color-4"><p>Banner Fill</p></div>
+        <div class="colordiv" id="color-5"><p>Banner Border</p></div>
+        <div class="colordiv" id="color-6"><p>Hops Fill</p></div>
+        <div class="colordiv" id="color-7"><p>Hops Border</p></div>
+    </div>
+    <div id="pattern-control">
+        <h3>Patterns:</h3>
+        <div class="colordiv" id="color-8"><p>Primary Color</p></div>
+        <div class="colordiv" id="color-9"><p>Secondary Color</p></div>
+        <h4>Select one:</h4>
+        <div class="colordiv" id="pattern-solid"><p>Solid</p></div>
+        <div class="colordiv" id="pattern-diamonds"><p>Diamonds</p></div>
+        <div class="colordiv" id="pattern-marrakesh"><p>Marrakesh</p></div>
+        <div class="colordiv" id="pattern-tablecloth"><p>Table Cloth</p></div>
+        <div class="colordiv" id="pattern-polka"><p>Polka</p></div>
+        <div class="colordiv" id="pattern-checkers"><p>Checkers</p></div>
+    </div>
+    <div id="rabbit-control"><h3>Rabbit:</h3></div>
+    <div id="colorpickerHolder"></div>
+</div>
+<div id="activate"></div>
+<div id="randomize"></div>
+
+
+<script type="text/javascript">
+    var svg1;
+    var svg2;
+    var browser;
+    var primary;
+    var secondary;
+    jQuery(function() {
+        // Sniff the browser
+        if ($.browser.chrome) {
+            browser = "-webkit-";
+        } else if ($.browser.msie) {
+            browser = "-ms-";
+        } else if ($.browser.mozilla) {
+            browser = "-moz-";
+        } else if ($.browser.opera) {
+            browser = "-o-";
+        } else {
+            browser = "";
+        }
+
+        // Get the hops
+        $("#hops-left").svg({
+            onLoad: function()
+                {
+                svg1 = $("#hops-left").svg('get');
+                svg1.load('static/hops/hops_left_styled.svg', {addTo: true,  changeSize: false});
+                },
+            settings: {}}
+            );
+        $("#hops-right").svg({
+            onLoad: function()
+                {
+                svg2 = $("#hops-right").svg('get');
+                svg2.load('static/hops/hops_right_styled.svg', {addTo: true,  changeSize: false});
+                },
+            settings: {}}
+            );
+
+        // On page load configure the colors for the selector widgets
+        $('#color-1').css('backgroundColor', rgb2hex($('#title-text').css('color')));
+        $('#color-2').css('backgroundColor', rgb2hex($('#brew-text').css('color')));
+        $('#color-3').css('backgroundColor', rgb2hex($('#label').css('borderColor')));
+        $('#color-4').css('backgroundColor', rgb2hex($('#banner').css('backgroundColor')));
+        $('#color-5').css('backgroundColor', rgb2hex($('#banner').css('borderColor')));
+
+        // Now set the hops SVGs (this does both)
+        svg1.style(".filler {fill: #fff}")
+        svg1.style(".outline {fill: " + rgb2hex($('#label').css('borderColor')) + "}")
+
+        // Now match the color pickers
+        $('#color-6').css('backgroundColor', "#fff");
+        $('#color-7').css('backgroundColor', rgb2hex($('#label').css('borderColor')));
+
+        // And hard code the colors for the pattern picker
+        primary = "#efefef";
+        secondary = "#cf4040";
+        $('#color-8').css('backgroundColor', primary);
+        $('#color-9').css('backgroundColor', secondary);
+
+        // Now set the patterns
+        applyPattern("solid", $('#pattern-solid'), browser, primary, secondary);
+        applyPattern("diamonds", $('#pattern-diamonds'), browser, primary, secondary);
+        applyPattern("marrakesh", $('#pattern-marrakesh'), browser, primary, secondary);
+        applyPattern("tablecloth", $('#pattern-tablecloth'), browser, primary, secondary);
+        applyPattern("polka", $('#pattern-polka'), browser, primary, secondary);
+        applyPattern("checkers", $('#pattern-checkers'), browser, primary, secondary);
+
+        // For displaying and hiding the controls
+        var controlsHidden = true;
+        $("#activate").click(function() {
+            if (controlsHidden) {
+                $("#controls").removeClass("hidden");
+                console.log("Displaying controls.");
+                controlsHidden = false;
+            } else {
+                $("#controls").addClass("hidden");
+                console.log("Hiding controls.");
+                controlsHidden = true;
+            }
+        });
+
+        // Control Javascript...
+        $('#color-1').ColorPicker({
+        	color: rgb2hex($("#color-1").css('backgroundColor')),
+        	onShow: function (colpkr) {
+        		$(colpkr).fadeIn(500);
+        		return false;
+        	},
+        	onHide: function (colpkr) {
+        		$(colpkr).fadeOut(500);
+        		return false;
+        	},
+        	onChange: function (hsb, hex, rgb) {
+        		$('#color-1').css('backgroundColor', '#' + hex);
+                $('#title-text').css('color', "#" + hex);
+        	}
+        });
+
+        $('#color-2').ColorPicker({
+        	color: rgb2hex($("#color-2").css('backgroundColor')),
+        	onShow: function (colpkr) {
+        		$(colpkr).fadeIn(500);
+        		return false;
+        	},
+        	onHide: function (colpkr) {
+        		$(colpkr).fadeOut(500);
+        		return false;
+        	},
+        	onChange: function (hsb, hex, rgb) {
+        		$('#color-2').css('backgroundColor', '#' + hex);
+                $('#brew-text').css('color', "#" + hex);
+        	}
+        });
+
+        $('#color-3').ColorPicker({
+        	color: rgb2hex($("#color-3").css('backgroundColor')),
+        	onShow: function (colpkr) {
+        		$(colpkr).fadeIn(500);
+        		return false;
+        	},
+        	onHide: function (colpkr) {
+        		$(colpkr).fadeOut(500);
+        		return false;
+        	},
+        	onChange: function (hsb, hex, rgb) {
+        		$('#color-3').css('backgroundColor', '#' + hex);
+                $('#label').css('borderColor', "#" + hex);
+        	}
+        });
+
+        $('#color-4').ColorPicker({
+        	color: rgb2hex($("#color-4").css('backgroundColor')),
+        	onShow: function (colpkr) {
+        		$(colpkr).fadeIn(500);
+        		return false;
+        	},
+        	onHide: function (colpkr) {
+        		$(colpkr).fadeOut(500);
+        		return false;
+        	},
+        	onChange: function (hsb, hex, rgb) {
+        		$('#color-4').css('backgroundColor', '#' + hex);
+                $('#banner').css('backgroundColor', "#" + hex);
+        	}
+        });
+
+        $('#color-5').ColorPicker({
+        	color: rgb2hex($("#color-5").css('backgroundColor')),
+        	onShow: function (colpkr) {
+        		$(colpkr).fadeIn(500);
+        		return false;
+        	},
+        	onHide: function (colpkr) {
+        		$(colpkr).fadeOut(500);
+        		return false;
+        	},
+        	onChange: function (hsb, hex, rgb) {
+        		$('#color-5').css('backgroundColor', '#' + hex);
+                $('#banner').css('borderColor', "#" + hex);
+        	}
+        });
+
+        $('#color-6').ColorPicker({
+        	color: rgb2hex($("#color-6").css('backgroundColor')),
+        	onShow: function (colpkr) {
+        		$(colpkr).fadeIn(500);
+        		return false;
+        	},
+        	onHide: function (colpkr) {
+        		$(colpkr).fadeOut(500);
+        		return false;
+        	},
+        	onChange: function (hsb, hex, rgb) {
+        		$('#color-6').css('backgroundColor', '#' + hex);
+                svg1.style(".filler {fill: " + hex + "}")
+        	}
+        });
+
+        $('#color-7').ColorPicker({
+        	color: rgb2hex($("#color-7").css('backgroundColor')),
+        	onShow: function (colpkr) {
+        		$(colpkr).fadeIn(500);
+        		return false;
+        	},
+        	onHide: function (colpkr) {
+        		$(colpkr).fadeOut(500);
+        		return false;
+        	},
+        	onChange: function (hsb, hex, rgb) {
+        		$('#color-7').css('backgroundColor', '#' + hex);
+                svg1.style(".outline {fill: " + hex + "}")
+        	}
+        });
+
+        // Control patterns
+        $('#color-8').ColorPicker({
+        	color: rgb2hex($("#color-8").css('backgroundColor')),
+        	onShow: function (colpkr) {
+        		$(colpkr).fadeIn(500);
+        		return false;
+        	},
+        	onHide: function (colpkr) {
+        		$(colpkr).fadeOut(500);
+        		return false;
+        	},
+        	onChange: function (hsb, hex, rgb) {
+        		$('#color-8').css('backgroundColor', '#' + hex);
+        		primary = "#" + hex;
+        		applyPattern("solid", $('#pattern-solid'), browser, primary, secondary);
+                applyPattern("diamonds", $('#pattern-diamonds'), browser, primary, secondary);
+                applyPattern("marrakesh", $('#pattern-marrakesh'), browser, primary, secondary);
+                applyPattern("tablecloth", $('#pattern-tablecloth'), browser, primary, secondary);
+                applyPattern("polka", $('#pattern-polka'), browser, primary, secondary);
+                applyPattern("checkers", $('#pattern-checkers'), browser, primary, secondary);
+        	}
+        });
+
+        $('#color-9').ColorPicker({
+        	color: rgb2hex($("#color-9").css('backgroundColor')),
+        	onShow: function (colpkr) {
+        		$(colpkr).fadeIn(500);
+        		return false;
+        	},
+        	onHide: function (colpkr) {
+        		$(colpkr).fadeOut(500);
+        		return false;
+        	},
+        	onChange: function (hsb, hex, rgb) {
+        		$('#color-9').css('backgroundColor', '#' + hex);
+        		secondary = "#" + hex;
+        		applyPattern("solid", $('#pattern-solid'), browser, primary, secondary);
+                applyPattern("diamonds", $('#pattern-diamonds'), browser, primary, secondary);
+                applyPattern("marrakesh", $('#pattern-marrakesh'), browser, primary, secondary);
+                applyPattern("tablecloth", $('#pattern-tablecloth'), browser, primary, secondary);
+                applyPattern("polka", $('#pattern-polka'), browser, primary, secondary);
+                applyPattern("checkers", $('#pattern-checkers'), browser, primary, secondary);
+        	}
+        });
+
+        $("#pattern-solid").click(function() {
+            applyPattern("solid", $('#label'), browser, primary, secondary);
+        });
+        $("#pattern-diamonds").click(function() {
+            applyPattern("diamonds", $('#label'), browser, primary, secondary);
+        });
+        $("#pattern-marrakesh").click(function() {
+            applyPattern("marrakesh", $('#label'), browser, primary, secondary);
+        });
+        $("#pattern-tablecloth").click(function() {
+            applyPattern("tablecloth", $('#label'), browser, primary, secondary);
+        });
+        $("#pattern-polka").click(function() {
+            applyPattern("polka", $('#label'), browser, primary, secondary);
+        });
+        $("#pattern-checkers").click(function() {
+            applyPattern("checkers", $('#label'), browser, primary, secondary);
+        });
+
+        // Randomization script...
+    })
+
+
+</script>
+
+</body>
+</html>

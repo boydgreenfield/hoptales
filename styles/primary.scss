@@ -1,0 +1,372 @@
+// Color variables
+$text-black: #444;
+$link-color: #026594;
+$background: #fbf9f8;
+$border-color: #BF2160;
+$banner-color: #ffffff;
+$banner-border-color: #000000;
+$white: #ffffff;
+
+// Object sizes
+$box-width: 500px;
+$rabbit-size: 300px;
+$rabbit-left-margin: 0px;
+$rabbit-bottom-margin: -1px;
+$banner-padding: 0.5em;
+$banner-from-top: 100px;
+$border-width: 5px;
+$banner-border-width: 2px;
+$hops-size: 200px;
+
+// Rabbit image
+$rabbit-docile: url(../static/rabbits/rabbit_docile.svg);
+$rabbit-angry: url(../static/rabbits/rabbit_angry.svg);
+$rabbit-jumping: url(../static/rabbits/rabbit_jumping.svg);
+$hops-left: url(../static/hops/hops_left_styled.svg);
+
+//$hops-left: url(../static/hops/hops_left_dualcolor_clear.svg);
+$hops-right: url(../static/hops/hops_right_dualcolor_clear.svg);
+//$pattern: url(../static/patterns/pattern_1.png);
+
+// Backgrounds
+$primary: #ffffff;
+$secondary: rgba(96, 16, 48, 0);
+@mixin solid($primary) {
+    background: $primary;
+}
+
+@mixin microbe($primary, $secondary) {
+    background:
+    -webkit-radial-gradient(0% 50%, circle, $secondary 9px, #613 10px, $secondary 11px) 0px 10px,
+    -webkit-radial-gradient(100% 100%,      $secondary 9px, #613 10px, $secondary 11px),
+    $primary;
+    background: -moz-radial-gradient(0% 50%, circle, $secondary 9px, #613 10px, $secondary 11px) 0px 10px,
+    -moz-radial-gradient(100% 100%,      $secondary 9px, #613 10px, $secondary 11px),
+    $primary;
+    ;
+    background: -ms-radial-gradient(0% 50%, circle, $secondary 9px, #613 10px, $secondary 11px) 0px 10px,
+    -ms-radial-gradient(100% 100%,      $secondary 9px, #613 10px, $secondary 11px),
+    $primary;
+    ;
+    background: -o-radial-gradient(0% 50%, circle, $secondary 9px, #613 10px, $secondary 11px) 0px 10px,
+    -o-radial-gradient(100% 100%,      $secondary 9px, #613 10px, $secondary 11px),
+    $primary;
+    ;
+    background-size: 20px 20px;
+}
+
+@mixin diamonds($primary, $secondary, $diamonds-size) {
+    background:
+    -webkit-linear-gradient(135deg, $secondary 25%, transparent 25%) ($diamonds-size * -1) 0,
+    -webkit-linear-gradient(225deg, $secondary 25%, transparent 25%) ($diamonds-size * -1) 0,
+    -webkit-linear-gradient(315deg, $secondary 25%, transparent 25%),
+    -webkit-linear-gradient(45deg, $secondary 25%, transparent 25%);
+    background:
+    -moz-linear-gradient(135deg, $secondary 25%, transparent 25%) -50px 0,
+    -moz-linear-gradient(225deg, $secondary 25%, transparent 25%) -50px 0,
+    -moz-linear-gradient(315deg, $secondary 25%, transparent 25%),
+    -moz-linear-gradient(45deg, $secondary 25%, transparent 25%);
+    background:
+    -ms-linear-gradient(135deg, $secondary 25%, transparent 25%) -50px 0,
+    -ms-linear-gradient(225deg, $secondary 25%, transparent 25%) -50px 0,
+    -ms-linear-gradient(315deg, $secondary 25%, transparent 25%),
+    -ms-linear-gradient(45deg, $secondary 25%, transparent 25%);
+    background:
+    -o-linear-gradient(135deg, $secondary 25%, transparent 25%) -50px 0,
+    -o-linear-gradient(225deg, $secondary 25%, transparent 25%) -50px 0,
+    -o-linear-gradient(315deg, $secondary 25%, transparent 25%),
+    -o-linear-gradient(45deg, $secondary 25%, transparent 25%);
+    background-size: $diamonds-size $diamonds-size;
+    background-color: $primary;
+}
+
+@mixin marrakesh($primary, $secondary) {
+    background-color:$primary;
+    background-image:
+    -webkit-radial-gradient($secondary 9px, transparent 10px),
+    -webkit-repeating-radial-gradient($secondary 0, $secondary 4px, transparent 5px, transparent 20px, $secondary 21px, $secondary 25px, transparent 26px, transparent 50px);
+    background-image:
+    -moz-radial-gradient($secondary 9px, transparent 10px),
+    -moz-repeating-radial-gradient($secondary 0, $secondary 4px, transparent 5px, transparent 20px, $secondary 21px, $secondary 25px, transparent 26px, transparent 50px);
+    background-image:
+    -ms-radial-gradient($secondary 9px, transparent 10px),
+    -ms-repeating-radial-gradient($secondary 0, $secondary 4px, transparent 5px, transparent 20px, $secondary 21px, $secondary 25px, transparent 26px, transparent 50px);
+    background-image:
+    -o-radial-gradient($secondary 9px, transparent 10px),
+    -o-repeating-radial-gradient($secondary 0, $secondary 4px, transparent 5px, transparent 20px, $secondary 21px, $secondary 25px, transparent 26px, transparent 50px);
+    background-size: 30px 30px, 90px 90px;
+    background-position: 0 0;
+}
+
+@mixin tablecloth($primary, $secondary, $size) {
+    background-color: $primary;
+    background-image: -webkit-linear-gradient(90deg, transparentize($secondary, 0.5) 50%, transparent 50%),
+    -webkit-linear-gradient(0deg, transparentize($secondary, 0.5) 50%, transparent 50%);
+    background-image: -moz-linear-gradient(90deg, transparentize($secondary, 0.5) 50%, transparent 50%),
+    -moz-linear-gradient(0deg, transparentize($secondary, 0.5) 50%, transparent 50%);
+    background-image: -ms-linear-gradient(90deg, transparentize($secondary, 0.5) 50%, transparent 50%),
+    -ms-linear-gradient(0deg, transparentize($secondary, 0.5) 50%, transparent 50%);
+    background-image: -o-linear-gradient(90deg, transparentize($secondary, 0.5) 50%, transparent 50%),
+    -o-linear-gradient(0deg, transparentize($secondary, 0.5) 50%, transparent 50%);
+    background-size: $size $size;
+}
+
+@mixin polka($primary, $secondary, $size) {
+    background-color: $secondary;
+    background-image: -webkit-radial-gradient($primary 15%, transparent 16%),
+    -webkit-radial-gradient($primary 15%, transparent 16%);
+    background-image: -moz-radial-gradient($primary 15%, transparent 16%),
+    -moz-radial-gradient($primary 15%, transparent 16%);
+    background-image: -ms-radial-gradient($primary 15%, transparent 16%),
+    -ms-radial-gradient($primary 15%, transparent 16%);
+    background-image: -o-radial-gradient($primary 15%, transparent 16%),
+    -o-radial-gradient($primary 15%, transparent 16%);
+    background-size:$size $size;
+    background-position: 0 0, ($size / 2) ($size / 2);
+}
+
+@mixin checkers($primary, $secondary, $size) {
+    background-color: $primary;
+    background-image: -webkit-linear-gradient(45deg, $secondary 25%, transparent 25%, transparent 75%, $secondary 75%, $secondary),
+    -webkit-linear-gradient(45deg, $secondary 25%, transparent 25%, transparent 75%, $secondary 75%, $secondary);
+    background-image: -moz-linear-gradient(45deg, $secondary 25%, transparent 25%, transparent 75%, $secondary 75%, $secondary),
+    -moz-linear-gradient(45deg, $secondary 25%, transparent 25%, transparent 75%, $secondary 75%, $secondary);
+    background-image: -ms-linear-gradient(45deg, $secondary 25%, transparent 25%, transparent 75%, $secondary 75%, $secondary),
+    -ms-linear-gradient(45deg, $secondary 25%, transparent 25%, transparent 75%, $secondary 75%, $secondary);
+    background-image: -o-linear-gradient(45deg, $secondary 25%, transparent 25%, transparent 75%, $secondary 75%, $secondary),
+    -o-linear-gradient(45deg, $secondary 25%, transparent 25%, transparent 75%, $secondary 75%, $secondary);
+    background-size: $size $size;
+    background-position:0 0, ($size / 2) ($size / 2)
+}
+
+@mixin docile-rabbit {
+    left: (($box-width - $rabbit-size) / 2 + $rabbit-left-margin);
+    bottom: 0px;
+    background-image: $rabbit-docile;
+    background-size: $rabbit-size $rabbit-size;
+    background-repeat: no-repeat;
+    background-position: 0px 35px;
+}
+
+@mixin angry-rabbit {
+    right: -2px;
+    bottom: 0px;
+    background-image: $rabbit-angry;
+    background-size: $rabbit-size $rabbit-size;
+    background-repeat: no-repeat;
+    background-position: 0px 25px;
+}
+
+@mixin jumping-rabbit {
+    left: (($box-width - $rabbit-size) / 2 + $rabbit-left-margin);
+    bottom: 0px;
+    background-image: $rabbit-jumping;
+    background-size: $rabbit-size $rabbit-size;
+    background-repeat: no-repeat;
+    background-position: 0px 0px;
+}
+
+
+
+// Font sizes
+$title-size: 3em;
+$title-spacing: -65px;
+
+// Now the scss
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    height: 100%;
+    background: $background;
+}
+
+a {
+    color: $link-color;
+    text-decoration: none;
+}
+
+a, h1, h2, h3, h4, p {
+//    font-family: alegreya-sc, serif;
+//    font-family: english-small-caps, serif;
+    font-family: french-canon-small-caps, serif;
+//    font-family: great-primer-small-caps, serif;
+    color: $text-black;
+
+}
+
+// Major design elements
+#label {
+    width: $box-width;
+    height: $box-width;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 120px;
+    position: relative;
+    border: $border-width solid $border-color;
+    // Patterns for the label
+//    @include microbe($primary, $secondary);
+//    @include diamonds(red, white, 35px);
+//    @include marrakesh(white, blue);
+//    @include tablecloth(white, red, 35px);
+//    @include polka(white, blue, 50px);
+//    @include checkers(white, blue, 50px)
+    @include solid($background);
+}
+
+#title {
+    width: $box-width;
+//    height: 50px;
+//    background: yellow;
+    position: absolute;
+    top: $title-spacing;
+//    top: -50px;
+    z-index: 2;
+}
+
+#title h1 {
+    font-size: $title-size;
+    text-align: center;
+}
+
+#hops-left {
+    position: absolute;
+    width: $hops-size;
+    height: $hops-size;
+    top: (-1 * $hops-size / 2);
+    left: (-1 * $hops-size / 2);
+    z-index: 2;
+}
+
+#hops-right {
+    position: absolute;
+    width: $hops-size;
+    height: $hops-size;
+    top: (-1 * $hops-size / 2);
+    right: (-1 * $hops-size / 2);
+    z-index: 2;
+}
+
+#rabbit {
+    width: $rabbit-size;
+    height: $rabbit-size;
+    position: absolute;
+//    @include docile-rabbit;
+//    @include angry-rabbit;
+    @include jumping-rabbit;
+}
+
+#banner {
+    width: $box-width;
+    padding-top: $banner-padding;
+    padding-bottom: $banner-padding;
+    background: $banner-color;
+    position: absolute;
+    top: $banner-from-top;
+    border-top: $banner-border-color solid $banner-border-width;
+    border-bottom: $banner-border-color solid $banner-border-width;
+}
+
+#banner h2 {
+    text-align: center;
+}
+
+#controls {
+    width: 100%;
+    height: 250px;
+    background: rgb(220, 200, 200);
+    border-top: 1px solid #999;
+    margin-top: 50px;
+}
+
+#color-control {
+    width: 100%;
+    height: 100px;
+}
+
+#color-control h3 {
+    float: left;
+    margin-top: 25px;
+    margin-left: 50px;
+    margin-right: 50px;
+    width: 80px;
+}
+
+#pattern-control {
+    width: 100%;
+    height: 100px;
+}
+
+#pattern-control h3 {
+    float: left;
+    margin-top: 25px;
+    margin-left: 50px;
+    margin-right: 50px;
+    width: 80px;
+}
+
+#pattern-control h4 {
+    float: left;
+    margin-top: 25px;
+    margin-left: 53px;
+    margin-right: 0px;
+    width: 100px;
+    font-style: italic;
+}
+
+
+#rabbit-control {
+    width: 100%;
+    height: 50px;
+}
+
+#rabbit-control h3 {
+    float: left;
+    margin-left: 50px;
+    width: 80px;
+}
+
+.leftcolordiv {
+    position: absolute;
+    left: 250px;
+}
+
+.colordiv {
+//    background: rgb(80, 80, 220);
+    border: 1px solid #444;
+    width: 50px;
+    height: 50px;
+    margin: 12px;
+    float: left;
+}
+
+.colordiv p {
+    text-align: center;
+    font-size: 0.7em;
+    padding-top: 52px;
+}
+
+
+.hidden {
+    display: none;
+}
+
+#randomize {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 40px;
+    width: 40px;
+    background: rgb(220, 80, 80);
+}
+
+#activate {
+    position: fixed;
+    top: 0;
+    right: 40px;
+    height: 40px;
+    width: 40px;
+    background: rgb(80, 220, 80);
+}

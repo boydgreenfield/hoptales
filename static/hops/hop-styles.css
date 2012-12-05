@@ -1,0 +1,14 @@
+path  {
+    stroke: 0;
+    stroke-linejoin: butt;
+}
+
+path.outline {
+    stroke: black;
+    fill: blue;
+}
+
+path.filler {
+    stroke: black;
+    fill: red;
+}
