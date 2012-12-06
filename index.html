@@ -111,6 +111,7 @@
         <div class="colordiv" id="color-7"><p>Hops Outline</p></div>
         <div class="colordiv" id="color-10"><p>Rabbit Fill</p></div>
         <div class="colordiv" id="color-11"><p>Rabbit Outline</p></div>
+        <div class="colordiv" id="color-12"><p>Page Background</p></div>
     </div>
     <div id="pattern-control">
         <h3>Patterns:</h3>
@@ -207,6 +208,8 @@
         $('#color-7').css('backgroundColor', rgb2hex($('#label').css('borderColor')));
         $('#color-10').css('backgroundColor', "#000");
         $('#color-11').css('backgroundColor', "#000");
+        $('#color-12').css('backgroundColor', rgb2hex($('body').css('backgroundColor')));
+
 
         // And hard code the colors for the pattern picker
         primary = "#efefef";
@@ -377,6 +380,22 @@
         	onChange: function (hsb, hex, rgb) {
         		$('#color-11').css('backgroundColor', '#' + hex);
                 rabbit1.style('.rabbit {stroke: #' + hex + '; stroke-width: 50;};')
+        	}
+        });
+
+        $('#color-12').ColorPicker({
+        	color: rgb2hex($("#color-12").css('backgroundColor')),
+        	onShow: function (colpkr) {
+        		$(colpkr).fadeIn(500);
+        		return false;
+        	},
+        	onHide: function (colpkr) {
+        		$(colpkr).fadeOut(500);
+        		return false;
+        	},
+        	onChange: function (hsb, hex, rgb) {
+        		$('#color-12').css('backgroundColor', '#' + hex);
+        		$('body').css('backgroundColor', '#' + hex);
         	}
         });
 
