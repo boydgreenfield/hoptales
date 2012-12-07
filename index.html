@@ -200,8 +200,8 @@
         $('#color-5').css('backgroundColor', rgb2hex($('#banner').css('borderColor')));
 
         // Now set the hops SVGs (this does both)
-        svg1.style(".filler {fill: #efefef}")
-        svg1.style(".outline {fill: #75bd22}")
+        svg1.style(".filler {fill: #fff}")
+        svg1.style(".outline {fill: " + rgb2hex($('#label').css('borderColor')) + "}")
 
         // Now match the color pickers
         $('#color-6').css('backgroundColor', "#fff");
