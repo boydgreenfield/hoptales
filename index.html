@@ -189,7 +189,6 @@
                 rabbit1.load('static/rabbits/rabbit_jumping.svg', {addTo: true, changeSize: false})
             },
             settings: {}
-            rabbit1.style('.rabbit {fill: #' + '033157' + '};');
         })
 
 
@@ -201,8 +200,8 @@
         $('#color-5').css('backgroundColor', rgb2hex($('#banner').css('borderColor')));
 
         // Now set the hops SVGs (this does both)
-        svg1.style(".filler {fill: #efefef}");
-        svg1.style(".outline {fill: #75bd22}");
+        svg1.style(".filler {fill: #efefef}")
+        svg1.style(".outline {fill: " + rgb2hex($('#label').css('borderColor')) + "}")
 
         // Now match the color pickers
         $('#color-6').css('backgroundColor', "#fff");
@@ -241,7 +240,7 @@
 
         // Control Javascript...
         $('#color-1').ColorPicker({
-        	color: rgb2hex($("#color-1").css('backgroundColor')),
+            color: rgb2hex($("#color-1").css('backgroundColor')),
         	onShow: function (colpkr) {
         		$(colpkr).fadeIn(500);
         		return false;
@@ -364,9 +363,7 @@
         	},
         	onChange: function (hsb, hex, rgb) {
         		$('#color-10').css('backgroundColor', '#' + hex);
-                rabbit1.style('.rabbit {fill: #' + hex + '};');
-                rabbit2.style('.rabbit {fill: #' + hex + '};');
-                rabbit3.style('.rabbit {fill: #' + hex + '};');
+                rabbit1.style('.rabbit {fill: #' + hex + '};')
         	}
         });
 
@@ -382,9 +379,7 @@
         	},
         	onChange: function (hsb, hex, rgb) {
         		$('#color-11').css('backgroundColor', '#' + hex);
-                rabbit1.style('.rabbit {stroke: #' + hex + '; stroke-width: 50;};');
-                rabbit2.style('.rabbit {stroke: #' + hex + '; stroke-width: 50;};');
-                rabbit3.style('.rabbit {stroke: #' + hex + '; stroke-width: 50;};');
+                rabbit1.style('.rabbit {stroke: #' + hex + '; stroke-width: 50;};')
         	}
         });
 
